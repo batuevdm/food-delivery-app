@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:id="@+id/menuProductsGroup">
+        <item
+            android:id="@+id/menuCategories"
+            android:icon="@drawable/ic_menu_categories"
+            android:title="@string/menu_categories" />
+        <item
+            android:id="@+id/menuCart"
+            android:icon="@drawable/ic_menu_cart"
+            android:title="@string/menu_cart" />
+    </group>
+    <group android:id="@+id/menuInfoGroup">
+        <item
+            android:id="@+id/menuInformation"
+            android:icon="@drawable/ic_menu_information"
+            android:title="@string/menu_information" />
+    </group>
+</menu>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="ru.batuevdm.fooddelivery">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:icon="@drawable/favicon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="m">
+        <activity
+            android:name="ru.batuevdm.fooddelivery.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="ru.batuevdm.fooddelivery.ProductActivity" />
+        <activity android:name="ru.batuevdm.fooddelivery.PhotoBigActivity" />
+        <activity android:name="ru.batuevdm.fooddelivery.InformationActivity" />
+        <activity android:name="ru.batuevdm.fooddelivery.SecretActivity" />
+        <activity android:name="ru.batuevdm.fooddelivery.CategoriesActivity" />
+        <activity android:name="ru.batuevdm.fooddelivery.SearchActivity" />
+        <activity android:name="ru.batuevdm.fooddelivery.CartActivity" />
+        <activity android:name="ru.batuevdm.fooddelivery.OrderActivity" />
+    </application>
+
+</manifest>

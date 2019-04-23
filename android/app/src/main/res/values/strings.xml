@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Food Delivery</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Настройки</string>
+
+    <string name="to_cart">В корзину</string>
+
+    <!-- Menu -->
+    <string name="menu_new_products">Новые товары</string>
+    <string name="menu_cabinet">Личный кабинет</string>
+    <string name="menu_cart">Корзина</string>
+    <string name="menu_categories">Категории</string>
+    <string name="menu_information">Информация</string>
+    <string name="menu_search">Поиск</string>
+    <string name="todo">TODO</string>
+    <string name="text_information">
+        Food Delivery\n
+        Доставка еды\n
+        Каталог товаров\n\n
+        Для работы приложения необходимо подключение к интернету.
+    </string>
+    <string name="cart_confirm_order">Оформить заказ</string>
+</resources>
