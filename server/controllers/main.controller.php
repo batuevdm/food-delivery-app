@@ -25,7 +25,6 @@ class MainController extends Controller
         }
 
         $this->data['orders'] = $this->models->stats->getOrders();
-        $this->data['users'] = $this->models->stats->getUsers();
         $this->data['products'] = $this->models->stats->getProducts();
     }
 

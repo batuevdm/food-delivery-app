@@ -78,8 +78,6 @@ class TemplateController extends Controller
         $title = $titles[App::getRouter()->getController()][App::getRouter()->getAction()];
         $data['title'] = $title;
 
-        $data['newOrdersCol'] = $this->models->stats->getNewOrders();
-
         $this->data = $data;
     }
 }

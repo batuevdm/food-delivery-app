@@ -8,12 +8,6 @@
     </div>
     <div class="col-sm-6 col-md-4">
         <div class="stats-item">
-            <div class="item-col"><?= $users; ?></div>
-            <div class="item-name">Пользователи</div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-4">
-        <div class="stats-item">
             <div class="item-col"><?= $products; ?></div>
             <div class="item-name">Товары</div>
         </div>

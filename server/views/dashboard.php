@@ -48,7 +48,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/dashboard/orders/view">
                             <span data-feather="shopping-cart"></span>
-                            Заказы <span class="badge badge-success"><?= $newOrdersCol; ?></span>
+                            Заказы
                         </a>
                     </li>
                     <hr>
