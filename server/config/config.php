@@ -26,9 +26,9 @@ Config::set('default.action', 'index');
 
 // Database connection
 Config::set('db.host', '127.0.0.1');
-Config::set('db.user', 'i47137_food_shop');
-Config::set('db.pass', '21950183dimkaBa');
-Config::set('db.base', 'i47137_food_shop');
+Config::set('db.user', 'food_shop');
+Config::set('db.pass', '*****');
+Config::set('db.base', 'food_shop');
 
 Config::set('photo.default', 'default.png');
 
