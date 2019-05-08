@@ -96,11 +96,7 @@ public class Api {
      * @param progressBar Прогресс-бар
      */
     public void loading(boolean status, ProgressBar progressBar) {
-        if (status) {
-            progressBar.setVisibility(ProgressBar.VISIBLE);
-        } else {
-            progressBar.setVisibility(ProgressBar.INVISIBLE);
-        }
+        progressBar.setVisibility(status ? ProgressBar.VISIBLE : ProgressBar.INVISIBLE);
     }
 
     /**

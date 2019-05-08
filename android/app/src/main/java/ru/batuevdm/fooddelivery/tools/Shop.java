@@ -34,6 +34,7 @@ public class Shop {
     }
 
     public void addToCart(int productID, int col, int productsCol, View v) {
+        // Чтение корзины из памяти устройства
         String oldProducts = getSettings("cart");
         if (oldProducts.trim().isEmpty()) {
             oldProducts = "{\"cart\": []}";
@@ -44,21 +45,22 @@ public class Shop {
             JSONObject newCartObject = new JSONObject();
             JSONArray newCart = new JSONArray();
 
-            boolean isOld = false;
+            // Обработка товаров в корзине
+            boolean isOld = false; // Есть ли этот товар в корзине
             for (int i = 0; i < oldCart.length(); i++) {
                 JSONObject oldProduct = oldCart.getJSONObject(i);
                 int _productID = oldProduct.getInt("id");
                 int _col = oldProduct.getInt("col");
                 if (_productID == productID) {
                     isOld = true;
-                    if (col <= productsCol && (_col + col) <= productsCol) {
+                    if (col <= productsCol && (_col + col) <= productsCol) { // Если новое количество товаров не более количества товара на складе, то добавлить этот товар
                         _col += col;
-                    } else {
-                        // Product col < Cart product col
+                    } else { // Иначе вывести ошибку
                         Toast.makeText(context, "Количество товаров больше, чем есть в наличии", Toast.LENGTH_LONG).show();
                         return;
                     }
                 }
+                // Добавить обновленное количество товара в корзину
                 JSONObject newProduct = new JSONObject();
                 newProduct.put("id", _productID);
                 newProduct.put("col", _col);
@@ -66,6 +68,7 @@ public class Shop {
                 newCart.put(newProduct);
             }
 
+            // Если товара в корзине еще нет, то добавить его
             if (!isOld) {
                 JSONObject newProduct = new JSONObject();
                 newProduct.put("id", productID);
@@ -76,6 +79,7 @@ public class Shop {
 
             newCartObject.put("cart", newCart);
 
+            // Сохранение корзины в память устройства
             String newProducts = newCartObject.toString();
             if (saveSettings("cart", newProducts))
                 Snackbar.make(v, "Товар добавлен в корзину", Snackbar.LENGTH_LONG).show();

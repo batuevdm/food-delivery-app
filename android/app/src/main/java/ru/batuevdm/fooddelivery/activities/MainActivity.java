@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -41,7 +42,6 @@ import ru.batuevdm.fooddelivery.tools.Shop;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Button btn1;
     int clicks = 0;
 
     @Override
@@ -110,9 +110,8 @@ public class MainActivity extends AppCompatActivity
         return super.onCreateOptionsMenu(menu);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -145,16 +144,17 @@ public class MainActivity extends AppCompatActivity
     {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         try {
-            View rowView = inflater.inflate(R.layout.product_item, null);
-            layout.addView(rowView, layout.getChildCount());
+            View rowView = inflater.inflate(R.layout.product_item, null); // Шаблон пункта товара
+            layout.addView(rowView, layout.getChildCount()); // Добавление товара в список
 
-            TextView productName = rowView.findViewById(R.id.productName);
-            ImageView productImage = rowView.findViewById(R.id.productImage);
-            TextView productPrice = rowView.findViewById(R.id.productPrice);
-            TextView productNewPrice = rowView.findViewById(R.id.productNewPrice);
-            Button productAddToCart = rowView.findViewById(R.id.productAddToCart);
+            TextView productName = rowView.findViewById(R.id.productName); // Название товара
+            ImageView productImage = rowView.findViewById(R.id.productImage); // Фото товара
+            TextView productPrice = rowView.findViewById(R.id.productPrice); // Ценв товара
+            TextView productNewPrice = rowView.findViewById(R.id.productNewPrice); // Цена товара со скидкой
+            Button productAddToCart = rowView.findViewById(R.id.productAddToCart); // Кнопка добавления в корзину
 
-            productName.setText(product.getString("name"));
+            productName.setText(product.getString("name")); // Вывод названия товара
+            // Вывод цены товара и скидки (если есть)
             productPrice.setText(product.getString("price") + " \u20BD");
             if (product.getString("new_price").equals("null")) {
                 productNewPrice.setVisibility(TextView.INVISIBLE);
@@ -163,6 +163,8 @@ public class MainActivity extends AppCompatActivity
                 productPrice.setPaintFlags(productPrice.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
                 productNewPrice.setVisibility(TextView.VISIBLE);
             }
+
+            // Загрузка и вывод фотографии товара
             String photo = product.getString("main_photo").equals("null") ? "default.png" : product.getString("main_photo");
             Picasso.get()
                     .load(Api.site + "images/products/" + photo)
@@ -170,20 +172,22 @@ public class MainActivity extends AppCompatActivity
                     .error(R.drawable.ic_menu_camera)
                     .into(productImage);
 
-            int col = Integer.parseInt(product.getString("col"));
-            productAddToCart.setOnClickListener(v -> {
+            int col = Integer.parseInt(product.getString("col")); // Вывод количества товара
+            productAddToCart.setOnClickListener(v -> { // Обработчик нажатия на кнопку добавления в корзину
                 Shop shop = new Shop(getApplicationContext());
                 try {
-                    shop.addToCart(Integer.parseInt(product.getString("id")), 1, col, v);
+                    shop.addToCart(Integer.parseInt(product.getString("id")), 1, col, v); // Добавление товара в корзину
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
 
+            // Если товар не в наличии, то скрыть кнопку добавления в корзину
             if (col < 1)
                 productAddToCart.setVisibility(Button.INVISIBLE);
 
-            rowView.setOnClickListener(v -> {
+            rowView.setOnClickListener(v -> { // Обработчик нажатия на пункт товара
+                // Запуск формы информации о товаре (ProductActivity) с передачей ID товара
                 Intent intent = new Intent(this, ProductActivity.class);
                 try {
                     intent.putExtra("product_id", product.getString("id"));
@@ -200,16 +204,16 @@ public class MainActivity extends AppCompatActivity
 
     public void loadProducts()
     {
-        ProgressBar progressBar = findViewById(R.id.loadProgress);
-        Api api = new Api(getApplicationContext());
-        api.loading(true, progressBar);
-        api.getNewProducts(new Callback() {
+        ProgressBar progressBar = findViewById(R.id.loadProgress); // Объект прогресс-бара
+        Api api = new Api(getApplicationContext()); // Класс для работы с сервером
+        api.loading(true, progressBar); // Показать прогресс-бар
+        api.getNewProducts(new Callback() { // Запрос новых товаров с сервера
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) { // Если произошла ошибка
                 runOnUiThread(() -> {
-                    api.loading(false, progressBar);
+                    api.loading(false, progressBar); // Скрыть прогресс-бар
 
-                    api.loadError(findViewById(android.R.id.content), v -> {
+                    api.loadError(findViewById(android.R.id.content), v -> { // Вывод ошибки
                         loadProducts();
                         api.dismissLoadError();
                     });
@@ -217,29 +221,29 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) { // Если запрос выполнен
                 runOnUiThread(() -> {
-                    api.loading(false, progressBar);
+                    api.loading(false, progressBar); // Скрыть прогресс-бар
                     try {
-                        String res = response.body() != null ? response.body().string() : "{}";
+                        String res = response.body() != null ? response.body().string() : "{}"; // Чтение ответа сервера
                         try {
-                            JSONObject result = new JSONObject(res);
-                            JSONArray products = result.getJSONArray("products");
+                            JSONObject result = new JSONObject(res); // Преобразование в JSON объект
+                            JSONArray products = result.getJSONArray("products"); // Массив товаров
                             LinearLayout scroll = findViewById(R.id.newProductsLayout);
 
                             for (int i = 0; i < products.length(); i++) {
-                                JSONObject product = products.getJSONObject(i);
-                                newProduct(product, scroll);
+                                JSONObject product = products.getJSONObject(i); // Информация о товаре
+                                newProduct(product, scroll); // Добавление товара в список
                             }
                         } catch (JSONException e) {
-                            api.loadError(findViewById(android.R.id.content), v -> {
+                            api.loadError(findViewById(android.R.id.content), v -> { // Вывод ошибки, если формат ответа не является JSON
                                 loadProducts();
                                 api.dismissLoadError();
                             });
                         }
 
                     } catch (IOException e) {
-                        api.loadError(findViewById(android.R.id.content), v -> {
+                        api.loadError(findViewById(android.R.id.content), v -> { // Вывод ошибки, если ответ пустой
                             loadProducts();
                             api.dismissLoadError();
                         });
